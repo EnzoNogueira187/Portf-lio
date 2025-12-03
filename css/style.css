@@ -1,3 +1,15 @@
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .menu {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
 .digitando {
   display: inline-block;
   overflow: hidden;
@@ -456,4 +468,5 @@ body {
 .linguagens img {
     margin-left: 30px;
     margin-top: 20px;
+
 }
