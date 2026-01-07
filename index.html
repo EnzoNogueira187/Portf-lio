@@ -303,4 +303,379 @@ html {
             </ul>
     </div>
 </body>
+    <script>
+    // script.js - Funcionalidades Interativas para o Portfólio
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. CONTROLES DE TEMA E ANIMAÇÕES
+    criarControles();
+    
+    // 2. ANIMAÇÃO DE ENTRADA
+    animarEntrada();
+    
+    // 3. DETECTOR DE ROLAGEM
+    configurarDetectorRolagem();
+    
+    // 4. BOTÃO VOLTAR AO TOPO
+    criarBotaoTopo();
+    
+    // 5. MODAL DE CONTATO
+    criarModalContato();
+    
+    // 6. BARRA DE PROGRESSO NAS HABILIDADES
+    criarBarrasProgresso();
+    
+    // 7. CONTADOR DE VISITAS
+    configurarContadorVisitas();
+    
+    // 8. ANIMAÇÃO DE DIGITAÇÃO NO TÍTULO
+    animarDigitacao();
+    
+    // 9. EFETO PARALLAX NO HEADER
+    configurarParallax();
+    
+    // 10. INTERAÇÕES COM OS CARDS
+    configurarInteracoesCards();
+});
+
+// ========== FUNÇÕES PRINCIPAIS ==========
+
+// 1. Criar controles de tema e animações
+function criarControles() {
+    const controlesDiv = document.createElement('div');
+    controlesDiv.className = 'controles';
+    
+    // Botão modo escuro/claro
+    const btnTema = document.createElement('button');
+    btnTema.className = 'btn-controle';
+    btnTema.innerHTML = '🌙';
+    btnTema.title = 'Alternar modo claro/escuro';
+    btnTema.onclick = alternarTema;
+    
+    // Botão pausar/retomar animações
+    const btnAnimacoes = document.createElement('button');
+    btnAnimacoes.className = 'btn-controle';
+    btnAnimacoes.innerHTML = '⚡';
+    btnAnimacoes.title = 'Pausar/Retomar animações';
+    btnAnimacoes.onclick = alternarAnimacoes;
+    
+    // Botão contato
+    const btnContato = document.createElement('button');
+    btnContato.className = 'btn-controle';
+    btnContato.innerHTML = '✉️';
+    btnContato.title = 'Entre em contato';
+    btnContato.onclick = abrirModalContato;
+    
+    controlesDiv.appendChild(btnTema);
+    controlesDiv.appendChild(btnAnimacoes);
+    controlesDiv.appendChild(btnContato);
+    document.body.appendChild(controlesDiv);
+    
+    // Verificar tema salvo
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo === 'escuro') {
+        document.body.classList.add('dark-mode');
+        btnTema.innerHTML = '☀️';
+    }
+}
+
+// 2. Animar entrada dos elementos
+function animarEntrada() {
+    // Marcar conteúdo como carregado
+    setTimeout(() => {
+        document.querySelector('.conteudo').classList.add('carregado');
+    }, 300);
+    
+    // Animar blocos individualmente
+    const blocos = document.querySelectorAll('.bloco-2, .bloco-3, .bloco-4');
+    blocos.forEach((bloco, index) => {
+        setTimeout(() => {
+            bloco.classList.add('visivel');
+        }, 500 + (index * 200));
+    });
+}
+
+// 3. Configurar detector de rolagem
+function configurarDetectorRolagem() {
+    // Criar indicador de rolagem
+    const indicador = document.createElement('div');
+    indicador.className = 'indicador-rolagem';
+    document.body.appendChild(indicador);
+    
+    // Atualizar indicador ao rolar
+    window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        indicador.style.width = scrolled + "%";
+    });
+}
+
+// 4. Criar botão voltar ao topo
+function criarBotaoTopo() {
+    const btnTopo = document.createElement('button');
+    btnTopo.className = 'btn-topo';
+    btnTopo.innerHTML = '↑';
+    btnTopo.title = 'Voltar ao topo';
+    btnTopo.onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    document.body.appendChild(btnTopo);
+    
+    // Mostrar/ocultar botão ao rolar
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTopo.classList.add('visivel');
+        } else {
+            btnTopo.classList.remove('visivel');
+        }
+    });
+}
+
+// 5. Criar modal de contato
+function criarModalContato() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-conteudo">
+            <span class="fechar-modal">&times;</span>
+            <h2>Entre em Contato</h2>
+            <p>Você pode me encontrar através das redes sociais:</p>
+            <div style="display: flex; gap: 15px; margin: 20px 0;">
+                <a href="https://www.instagram.com/eua_nogueira?igsh=bmVkb3l2bXpsNTJ1" target="_blank" style="text-decoration: none;">
+                    <div style="background: linear-gradient(45deg, #E1306C, #F77737); color: white; padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span>Instagram</span>
+                    </div>
+                </a>
+                <a href="https://www.linkedin.com/in/enzo-nogueira-dos-santos/" target="_blank" style="text-decoration: none;">
+                    <div style="background: linear-gradient(45deg, #0077B5, #00A0DC); color: white; padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span>LinkedIn</span>
+                    </div>
+                </a>
+            </div>
+            <p>Ou envie um email para: <strong>enzo.nogueira@exemplo.com</strong></p>
+            <div style="margin-top: 20px; padding: 15px; background-color: #f7fafc; border-radius: 10px; border-left: 4px solid #667eea;">
+                <p style="margin: 0; font-size: 0.9rem;">Estou sempre aberto a novas oportunidades e conexões!</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Fechar modal
+    modal.querySelector('.fechar-modal').onclick = () => {
+        modal.classList.remove('ativo');
+    };
+    
+    // Fechar ao clicar fora
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('ativo');
+        }
+    };
+}
+
+// 6. Criar barras de progresso nas habilidades
+function criarBarrasProgresso() {
+    const habilidades = document.querySelectorAll('.bloco-4 ul li');
+    const niveis = {
+        'C#': 85,
+        'JavaScript': 80,
+        'HTML': 90,
+        'CSS': 85,
+        'PHP': 70,
+        'Python': 75,
+        '.NET': 80,
+        'React': 75,
+        'SQL Server': 85,
+        'MySQL': 80,
+        'Git': 90
+    };
+    
+    habilidades.forEach(li => {
+        const texto = li.textContent.toLowerCase();
+        
+        // Encontrar correspondência
+        for (const [habilidade, nivel] of Object.entries(niveis)) {
+            if (texto.includes(habilidade.toLowerCase())) {
+                const barraDiv = document.createElement('div');
+                barraDiv.className = 'barra-progresso';
+                
+                const progressoDiv = document.createElement('div');
+                progressoDiv.className = 'progresso';
+                progressoDiv.style.width = '0%';
+                
+                barraDiv.appendChild(progressoDiv);
+                li.appendChild(barraDiv);
+                
+                // Animar após um delay
+                setTimeout(() => {
+                    progressoDiv.style.width = `${nivel}%`;
+                }, 100);
+                
+                break;
+            }
+        }
+    });
+}
+
+// 7. Configurar contador de visitas
+function configurarContadorVisitas() {
+    let visitas = localStorage.getItem('portfolioVisitas');
+    
+    if (!visitas) {
+        visitas = 1;
+    } else {
+        visitas = parseInt(visitas) + 1;
+    }
+    
+    localStorage.setItem('portfolioVisitas', visitas);
+    
+    const contadorDiv = document.createElement('div');
+    contadorDiv.className = 'contador-visitas';
+    contadorDiv.innerHTML = `👁️ Visitas: <strong>${visitas}</strong>`;
+    document.body.appendChild(contadorDiv);
+}
+
+// 8. Animar digitação no título
+function animarDigitacao() {
+    const titulo = document.querySelector('.bloco-1 h1');
+    const textoOriginal = titulo.textContent;
+    
+    // Resetar para efeito
+    titulo.textContent = '';
+    
+    let i = 0;
+    const digitar = () => {
+        if (i < textoOriginal.length) {
+            titulo.textContent += textoOriginal.charAt(i);
+            i++;
+            setTimeout(digitar, 50);
+        }
+    };
+    
+    // Iniciar após um breve delay
+    setTimeout(digitar, 1000);
+}
+
+// 9. Configurar efeito parallax no header
+function configurarParallax() {
+    const header = document.querySelector('.bloco-1');
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        header.style.transform = `translate3d(0px, ${rate}px, 0px)`;
+    });
+}
+
+// 10. Configurar interações com os cards
+function configurarInteracoesCards() {
+    const cards = document.querySelectorAll('.bloco-2, .bloco-3, .bloco-4');
+    
+    cards.forEach(card => {
+        // Efeito de clique
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('a')) {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            }
+        });
+        
+        // Destacar ao passar o mouse
+        card.addEventListener('mouseenter', function() {
+            this.style.zIndex = '10';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.zIndex = '';
+        });
+    });
+}
+
+// ========== FUNÇÕES DE CONTROLE ==========
+
+// Alternar tema claro/escuro
+function alternarTema() {
+    const body = document.body;
+    const btnTema = document.querySelector('.btn-controle');
+    
+    body.classList.toggle('dark-mode');
+    
+    if (body.classList.contains('dark-mode')) {
+        btnTema.innerHTML = '☀️';
+        localStorage.setItem('tema', 'escuro');
+    } else {
+        btnTema.innerHTML = '🌙';
+        localStorage.setItem('tema', 'claro');
+    }
+}
+
+// Alternar animações
+function alternarAnimacoes() {
+    const btnAnimacoes = document.querySelectorAll('.btn-controle')[1];
+    const elementosAnimados = document.querySelectorAll('*');
+    
+    if (btnAnimacoes.getAttribute('data-pausado') === 'true') {
+        // Retomar animações
+        elementosAnimados.forEach(el => {
+            el.style.animationPlayState = 'running';
+        });
+        btnAnimacoes.innerHTML = '⚡';
+        btnAnimacoes.setAttribute('data-pausado', 'false');
+        btnAnimacoes.title = 'Pausar animações';
+    } else {
+        // Pausar animações
+        elementosAnimados.forEach(el => {
+            el.style.animationPlayState = 'paused';
+        });
+        btnAnimacoes.innerHTML = '▶️';
+        btnAnimacoes.setAttribute('data-pausado', 'true');
+        btnAnimacoes.title = 'Retomar animações';
+    }
+}
+
+// Abrir modal de contato
+function abrirModalContato() {
+    document.querySelector('.modal').classList.add('ativo');
+}
+
+// ========== FUNÇÕES ADICIONAIS ==========
+
+// Adicionar ícones Font Awesome (necessário para ícones nos títulos)
+function adicionarFontAwesome() {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    document.head.appendChild(link);
+}
+
+// Adicionar ícones aos títulos após carregamento
+window.addEventListener('load', function() {
+    // Adicionar Font Awesome
+    adicionarFontAwesome();
+    
+    // Adicionar ícones aos títulos
+    const titulos = document.querySelectorAll('h2');
+    if (titulos.length >= 3) {
+        titulos[0].innerHTML = '<i class="fas fa-briefcase"></i> ' + titulos[0].textContent;
+        titulos[1].innerHTML = '<i class="fas fa-graduation-cap"></i> ' + titulos[1].textContent;
+        titulos[2].innerHTML = '<i class="fas fa-code"></i> ' + titulos[2].textContent;
+    }
+    
+    // Reorganizar ícones sociais em container
+    const bloco1 = document.querySelector('.bloco-1');
+    const links = bloco1.querySelectorAll('a');
+    const socialDiv = document.createElement('div');
+    socialDiv.className = 'social-links';
+    
+    links.forEach(link => {
+        socialDiv.appendChild(link);
+    });
+    
+    bloco1.appendChild(socialDiv);
+});
+    </script>
 </html>
+
