@@ -271,6 +271,9 @@ html {
             <a href="https://www.linkedin.com/in/enzo-nogueira-dos-santos/">
                 <img src="linkedin.png" alt="icone do linkedin para redirecionar ao perfil">
             </a>
+            <a href="https://github.com/EnzoNogueira">
+                <img src="github.png" alt="icone do github para redirecionar ao perfil">
+            </a>
         </div>
         <div class="bloco-2">
             <h2>Experiência de Trabalhos</h2>
@@ -302,10 +305,18 @@ html {
                 <li>Controle de Versão: Git</li>
             </ul>
     </div>
+    
+    <div class="bloco-6">
+    <h2><i class="fas fa-envelope"></i> Contato</h2>
+    <div class="contato-info">
+        <p><i class="fas fa-envelope"></i> enzo.nogueira2007@gmail.com</p>
+        <p><i class="fas fa-phone"></i> (11) 97136-3855</p>
+        <p><i class="fas fa-map-marker-alt"></i> Osasco, SP</p>
+    </div>
+</div>
+    </div>
 </body>
-    <script>
-    // script.js - Funcionalidades Interativas para o Portfólio
-
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     // 1. CONTROLES DE TEMA E ANIMAÇÕES
     criarControles();
@@ -345,38 +356,10 @@ function criarControles() {
     const controlesDiv = document.createElement('div');
     controlesDiv.className = 'controles';
     
-    // Botão modo escuro/claro
-    const btnTema = document.createElement('button');
-    btnTema.className = 'btn-controle';
-    btnTema.innerHTML = '🌙';
-    btnTema.title = 'Alternar modo claro/escuro';
-    btnTema.onclick = alternarTema;
-    
-    // Botão pausar/retomar animações
-    const btnAnimacoes = document.createElement('button');
-    btnAnimacoes.className = 'btn-controle';
-    btnAnimacoes.innerHTML = '⚡';
-    btnAnimacoes.title = 'Pausar/Retomar animações';
-    btnAnimacoes.onclick = alternarAnimacoes;
-    
-    // Botão contato
-    const btnContato = document.createElement('button');
-    btnContato.className = 'btn-controle';
-    btnContato.innerHTML = '✉️';
-    btnContato.title = 'Entre em contato';
-    btnContato.onclick = abrirModalContato;
-    
     controlesDiv.appendChild(btnTema);
     controlesDiv.appendChild(btnAnimacoes);
     controlesDiv.appendChild(btnContato);
     document.body.appendChild(controlesDiv);
-    
-    // Verificar tema salvo
-    const temaSalvo = localStorage.getItem('tema');
-    if (temaSalvo === 'escuro') {
-        document.body.classList.add('dark-mode');
-        btnTema.innerHTML = '☀️';
-    }
 }
 
 // 2. Animar entrada dos elementos
@@ -408,27 +391,6 @@ function configurarDetectorRolagem() {
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (winScroll / height) * 100;
         indicador.style.width = scrolled + "%";
-    });
-}
-
-// 4. Criar botão voltar ao topo
-function criarBotaoTopo() {
-    const btnTopo = document.createElement('button');
-    btnTopo.className = 'btn-topo';
-    btnTopo.innerHTML = '↑';
-    btnTopo.title = 'Voltar ao topo';
-    btnTopo.onclick = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    document.body.appendChild(btnTopo);
-    
-    // Mostrar/ocultar botão ao rolar
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            btnTopo.classList.add('visivel');
-        } else {
-            btnTopo.classList.remove('visivel');
-        }
     });
 }
 
@@ -503,10 +465,10 @@ function criarBarrasProgresso() {
                 const progressoDiv = document.createElement('div');
                 progressoDiv.className = 'progresso';
                 progressoDiv.style.width = '0%';
-                
+
                 barraDiv.appendChild(progressoDiv);
                 li.appendChild(barraDiv);
-                
+
                 // Animar após um delay
                 setTimeout(() => {
                     progressoDiv.style.width = `${nivel}%`;
@@ -594,53 +556,6 @@ function configurarInteracoesCards() {
     });
 }
 
-// ========== FUNÇÕES DE CONTROLE ==========
-
-// Alternar tema claro/escuro
-function alternarTema() {
-    const body = document.body;
-    const btnTema = document.querySelector('.btn-controle');
-    
-    body.classList.toggle('dark-mode');
-    
-    if (body.classList.contains('dark-mode')) {
-        btnTema.innerHTML = '☀️';
-        localStorage.setItem('tema', 'escuro');
-    } else {
-        btnTema.innerHTML = '🌙';
-        localStorage.setItem('tema', 'claro');
-    }
-}
-
-// Alternar animações
-function alternarAnimacoes() {
-    const btnAnimacoes = document.querySelectorAll('.btn-controle')[1];
-    const elementosAnimados = document.querySelectorAll('*');
-    
-    if (btnAnimacoes.getAttribute('data-pausado') === 'true') {
-        // Retomar animações
-        elementosAnimados.forEach(el => {
-            el.style.animationPlayState = 'running';
-        });
-        btnAnimacoes.innerHTML = '⚡';
-        btnAnimacoes.setAttribute('data-pausado', 'false');
-        btnAnimacoes.title = 'Pausar animações';
-    } else {
-        // Pausar animações
-        elementosAnimados.forEach(el => {
-            el.style.animationPlayState = 'paused';
-        });
-        btnAnimacoes.innerHTML = '▶️';
-        btnAnimacoes.setAttribute('data-pausado', 'true');
-        btnAnimacoes.title = 'Retomar animações';
-    }
-}
-
-// Abrir modal de contato
-function abrirModalContato() {
-    document.querySelector('.modal').classList.add('ativo');
-}
-
 // ========== FUNÇÕES ADICIONAIS ==========
 
 // Adicionar ícones Font Awesome (necessário para ícones nos títulos)
@@ -676,6 +591,5 @@ window.addEventListener('load', function() {
     
     bloco1.appendChild(socialDiv);
 });
-    </script>
+</script>
 </html>
-
